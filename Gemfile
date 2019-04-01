@@ -13,7 +13,7 @@ end
 
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'chartkick'
-gem 'bootstrap', '~> 4.1.0'
+gem "bootstrap", ">= 4.3.1"
 gem 'jquery-rails'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
