@@ -163,7 +163,7 @@ Resources:
                     echo export IMAGE_UPLOAD_BUCKET=${ImageUploadBucket} >> /etc/profile
                     source /etc/profile
                     # Deploy App
-                    git clone https://github.com/horsfieldsa/example-corp-app.git /opt/webapp --branch v1.0.0
+                    git clone https://github.com/horsfieldsa/example-corp-app.git /opt/webapp --branch v1.0.1
                     cd /opt/webapp
                     bundle install
                     RAILS_ENV=production rails assets:precompile
