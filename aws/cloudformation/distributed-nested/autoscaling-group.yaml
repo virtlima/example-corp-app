@@ -49,17 +49,14 @@ Parameters:
     DBName:
         Description: WebApp Database Name
         Type: String
-        Default: webapp
 
     DBUser:
         Description: WebApp Database User
         Type: String
-        Default: webapp
-        
+
     DBPassword:
         Description: WebApp Database User Password
         Type: String
-        Default: webapp
 
     PrimaryInstanceName:
         Description: A reference to RDS Primary Instance Name

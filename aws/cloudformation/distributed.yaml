@@ -19,7 +19,7 @@ Parameters:
     DBPassword:
         Description: WebApp Database User Password
         Type: String
-        Default: webapp
+        Default: password
 
     KeyName:
         Description: Name of an existing EC2 KeyPair to enable SSH access to the app instances.
@@ -105,6 +105,9 @@ Resources:
                 PrimaryInstanceName: !GetAtt Database.Outputs.PrimaryInstanceName
                 PrimaryInstancePort: !GetAtt Database.Outputs.PrimaryInstancePort
                 ImageUploadBucket: !GetAtt ImageUploadBucket.Outputs.ImageUploadBucket
+                DBName: !Ref DBName
+                DBUser: !Ref DBUser
+                DBPassword: !Ref DBPassword
 
     ImageUploadBucket:
         Type: AWS::CloudFormation::Stack
