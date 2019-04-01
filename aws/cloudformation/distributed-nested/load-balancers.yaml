@@ -1,5 +1,5 @@
 Description: >
-    This template deploys an Application Load Balancer that exposes the Imagetrends service.
+    This template deploys an Application Load Balancer that exposes the WebApp service.
 
 Parameters:
 

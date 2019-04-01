@@ -22,7 +22,7 @@ sampling_rules =  {
 }
 
 Rails.application.config.xray = {
-    name: 'imagetrends',
+    name: 'example-app',
     sampling: false,
     sampling_rules: sampling_rules,
     patch: %I[net_http aws_sdk],

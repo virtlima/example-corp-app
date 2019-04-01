@@ -1,6 +1,6 @@
 RailsAdmin.config do |config|
 
-  config.main_app_name = ["IMAGETRENDS", "Admin"]
+  config.main_app_name = ["EXAMPLECORP", "Admin"]
   config.parent_controller = 'ApplicationController' 
 
   ### Popular gems integration

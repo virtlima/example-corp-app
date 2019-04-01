@@ -47,19 +47,19 @@ Parameters:
         Type: String
 
     DBName:
-        Description: Imagetrends Database Name
+        Description: WebApp Database Name
         Type: String
-        Default: imagetrends
+        Default: webapp
 
     DBUser:
-        Description: Imagetrends Database User
+        Description: WebApp Database User
         Type: String
-        Default: imagetrends
+        Default: webapp
         
     DBPassword:
-        Description: Imagetrends Database User Password
+        Description: WebApp Database User Password
         Type: String
-        Default: imagetrends
+        Default: webapp
 
     PrimaryInstanceName:
         Description: A reference to RDS Primary Instance Name
@@ -145,7 +145,7 @@ Resources:
             InstanceType: !Ref InstanceType
             SecurityGroups:
                 - !Ref SecurityGroup
-            IamInstanceProfile: !Ref ImagetrendsInstanceProfile
+            IamInstanceProfile: !Ref WebAppInstanceProfile
             KeyName: !Ref KeyName
             UserData:
                 'Fn::Base64': !Sub |
@@ -166,8 +166,8 @@ Resources:
                     echo export IMAGE_UPLOAD_BUCKET=${ImageUploadBucket} >> /etc/profile
                     source /etc/profile
                     # Deploy App
-                    git clone https://github.com/horsfieldsa/imagetrends.git /opt/imagetrends --branch v1.0.1
-                    cd /opt/imagetrends
+                    git clone https://github.com/horsfieldsa/example-corp-app.git /opt/webapp --branch v1.0.0
+                    cd /opt/webapp
                     bundle install
                     RAILS_ENV=production rails assets:precompile
                     bin/rails db:create
@@ -177,7 +177,7 @@ Resources:
                     # Signal Completion
                     /opt/aws/bin/cfn-signal -e 0 --region ${AWS::Region} --stack ${AWS::StackName} --resource AppAutoScalingGroup
                     
-  ImagetrendsInstanceAccessRole:
+  WebAppInstanceAccessRole:
     Type: "AWS::IAM::Role"
     Properties:
       ManagedPolicyArns: 
@@ -199,13 +199,13 @@ Resources:
               - "sts:AssumeRole"
       Path: "/"
 
-  ImagetrendsInstanceProfile: 
+  WebAppInstanceProfile: 
     Type: "AWS::IAM::InstanceProfile"
     Properties: 
       Path: "/"
       Roles: 
         - 
-          Ref: "ImagetrendsInstanceAccessRole"
+          Ref: "WebAppInstanceAccessRole"
 
 Outputs:
 

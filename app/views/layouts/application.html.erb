@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IMAGETRENDS - Set the Trend!</title>
+    <title>EXAMPLE CORP. - Web Application</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -38,7 +38,7 @@
       <% if !user_signed_in? && params[:controller] == 'images' && params[:action] == 'index' %>  
           <section class="jumbotron text-center">
               <div class="container">
-                  <h3 class="jumbotron-heading">Hello, Welcome to IMAGETRENDS</h3>
+                  <h3 class="jumbotron-heading">Hello, Welcome to EXAMPLE CORP.</h3>
                   <p class="lead text-muted">This is a sample application used for learning Amazon Web Services. This application will analyze the images you upload using Amazon Rekognition and tag them based on the detected content. Upload an image to get started!</p>
                   <p>
                     <%= link_to '<i class="fa fa-user" aria-hidden="true"></i> Sign In'.html_safe, new_user_session_path, 

@@ -13,7 +13,7 @@ class DetectSentimentJob
                            
             XRay.recorder.configure(config)
 
-            segment = XRay.recorder.begin_segment 'imagetrends'
+            segment = XRay.recorder.begin_segment 'example-app'
 
             XRay.recorder.capture('detect_sentiment', segment: segment) do |subsegment|
 

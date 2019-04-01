@@ -12,7 +12,7 @@ class DetectCelebritiesJob
               
             XRay.recorder.configure(config)
 
-            segment = XRay.recorder.begin_segment 'imagetrends'
+            segment = XRay.recorder.begin_segment 'example-app'
             XRay.recorder.capture('detect_celebrities', segment: segment) do |subsegment|
 
                 job_annotations = { 

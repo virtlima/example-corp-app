@@ -1,12 +1,10 @@
-# imagetrends
+# example-corp-app
 
 A mock workload for a fictitious company used to learn and deliver demonstrations of AWS services. Think of this as a learning
 platform that can be modified as needed to test AWS services. Some functionality is built with demonstrations and workshops in mind, so it is
 by no means an example of a Production ready application. 
 
 ## Overview
-
-![Alt text](documentation/imagetrends.png?raw=true "ImageTrends Screenshot")
 
 The application is a simple Ruby on Rails (5.2) application with an Aurora MySql database. The application runs on EC2 and uses Puma to serve the applicaiton. This shouldn't be considered a good pattern for hosting a Rails appliation in production, but keeps things simple for demo purposes.
 
@@ -20,7 +18,7 @@ You can launch the sample application stack through this button:
 
 WARNING: Make sure you deploy it to a supported region (See Below)
 
-[![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=ImageTrendsSampleApp&templateURL=https://s3-us-west-2.amazonaws.com/imagetrends-sample-application/distributed.yaml)
+[![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=ExampleCorpWebApp&templateURL=https://s3-us-west-2.amazonaws.com/example-corp-sample-application/distributed.yaml)
 
 ### Supported Regions
 
@@ -33,7 +31,7 @@ WARNING: Make sure you deploy it to a supported region (See Below)
 
 ## Log Files
 
-* Application: /opt/imagetrends/logs
+* Application: /opt/webapp/logs
   * application.log
   * production.log
   * xray.log
@@ -42,11 +40,9 @@ WARNING: Make sure you deploy it to a supported region (See Below)
 
 The application uses AWS X-Ray (via: https://github.com/aws/aws-xray-sdk-ruby) to record and monitor all HTTP, SDK and Database calls. After the application has received some traffic you should see a service map as shown below in the region where the application is hosted. 
 
-![Alt text](documentation/xray.png?raw=true "AWS X-Ray Screenshot")
-
 ## Generating Errors
 
-For a demo application like Imagetrends, it's useful to leave some "bugs" in the system for testing various failure scenarios and responses. This is especially useful for monitoring demonstrations and recovery examples. Below are some actions that will cause application failures, as well as how to recover from these failures.
+For a demo application, it's useful to leave some "bugs" in the system for testing various failure scenarios and responses. This is especially useful for monitoring demonstrations and recovery examples. Below are some actions that will cause application failures, as well as how to recover from these failures.
 
 ### ERROR: Image Larger than 5 MB
 
@@ -90,10 +86,3 @@ E, [2018-10-24T12:14:34.302484 #3374] ERROR -- : Error detecting text for Image:
 1. Logon as an administrator (l: admin@admin.com p: Password123). You may need to access the Logon path directly at /users/sign_in
 2. Open the Administration application. You may need to access the Administration application directly at /admin.
 3. Delete the last image you uploaded. (Look for several Error tags)
-
-
-## Sample Images
-
-You can download some sample photos to use with the application here: 	https://s3-us-west-2.amazonaws.com/imagetrends-sample-application/sample-photos.zip
-
-These images are covered by the Death to Stock Photo licensing terms outlined here: https://deathtothestockphoto.com/official-license/

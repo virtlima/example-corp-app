@@ -13,7 +13,7 @@ class DetectLabelsJob
                            
             XRay.recorder.configure(config)
 
-            segment = XRay.recorder.begin_segment 'imagetrends'
+            segment = XRay.recorder.begin_segment 'example-app'
 
             XRay.recorder.capture('detect_labels', segment: segment) do |subsegment|
 
