@@ -49,16 +49,6 @@ class DetectLabelsJob
 
             end
 
-            @category = Tag.where(image_id: @image.id).where("confidence > ?", 95.0).first!
-
-            event = {
-                type: 'item',
-                ITEM_ID: @image.id,
-                CATEGORY: @category ? @category.name : 'None'
-                }
-        
-            EventRecordJob.perform_async(event)
-
             XRay.recorder.end_segment
 
             rescue StandardError => e
