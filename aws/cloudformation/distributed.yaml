@@ -56,12 +56,27 @@ Parameters:
         AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
         ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
 
+    Email:
+     Description: The email address to notify for events related to the workload (specify an email you have immediate access to; no email will be sent to this address after the lab is concluded)
+     Type: String
+
+    BucketName:
+        AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
+        ConstraintDescription: S3 Bucket name can include numbers, lowercase
+          letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen
+          (-).
+        Default: example-corp-sample-application
+        Description: S3 bucket name for the Quick Start assets. Quick Start bucket name
+          can include numbers, lowercase letters, uppercase letters, and hyphens (-).
+          It cannot start or end with a hyphen (-).
+        Type: String
+
 Resources:
 
     VPC:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3.amazonaws.com/example-corp-sample-application/distributed-nested/vpc.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/vpc.yaml
             Parameters:
                 EnvironmentName: !Ref AWS::StackName
                 VpcCIDR: 10.180.0.0/16
@@ -73,7 +88,7 @@ Resources:
     SecurityGroups:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3.amazonaws.com/example-corp-sample-application/distributed-nested/security-groups.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/security-groups.yaml
             Parameters: 
                 EnvironmentName: !Ref AWS::StackName
                 VPC: !GetAtt VPC.Outputs.VPC
@@ -82,7 +97,7 @@ Resources:
     ALB:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3.amazonaws.com/example-corp-sample-application/distributed-nested/load-balancers.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/load-balancers.yaml
             Parameters:
                 EnvironmentName: !Ref AWS::StackName
                 VPC: !GetAtt VPC.Outputs.VPC
@@ -92,7 +107,7 @@ Resources:
     ASG:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3.amazonaws.com/example-corp-sample-application/distributed-nested/autoscaling-group.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/autoscaling-group.yaml
             Parameters:
                 EnvironmentName: !Ref AWS::StackName
                 InstanceType: !Ref InstanceType
@@ -112,12 +127,12 @@ Resources:
     ImageUploadBucket:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3.amazonaws.com/example-corp-sample-application/distributed-nested/bucket.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/bucket.yaml
 
     Database:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL: https://s3-us-west-2.amazonaws.com/example-corp-sample-application/distributed-nested/database.yaml
+            TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/database.yaml
             Parameters:
                 DBInstanceType: !Ref DBInstanceType
                 EnvironmentName: !Ref AWS::StackName
@@ -127,6 +142,19 @@ Resources:
                 DBName: !Ref DBName
                 DBUser: !Ref DBUser
                 DBPassword: !Ref DBPassword
+
+    Monitoring:
+      Type: AWS::CloudFormation::Stack
+      Properties:
+        TemplateURL: !Sub https://s3.amazonaws.com/${BucketName}/distributed-nested/monitoring.yaml
+        Parameters:
+          EnvironmentName: !Ref 'AWS::StackName'
+          BucketName: !Ref BucketName
+          Email: !Ref Email
+          VPC: !GetAtt 
+            - VPC
+            - Outputs.VPC
+
 
 Outputs:
 
