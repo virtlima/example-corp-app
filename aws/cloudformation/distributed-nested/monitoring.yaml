@@ -3,6 +3,25 @@ Description: This template provisions and configures all monitoring assets
 
 Parameters:
 
+  DBName:
+      Description: WebApp Database Name
+      Type: String
+      Default: webapp
+
+  DBUser:
+      Description: WebApp Database User
+      Type: String
+      Default: webapp
+      
+  DBPassword:
+      Description: WebApp Database User Password
+      Type: String
+      Default: password
+
+  DBEndpoint:
+      Description: Endpoint Name of RDS Database
+      Type: String
+
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
     Type: String
@@ -62,6 +81,7 @@ Resources:
               - 'sts:AssumeRole'
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/AWSLambdaExecute'
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
       Policies:
         - PolicyName: ExampleCorpLambdaPolicy
           PolicyDocument:
@@ -84,12 +104,18 @@ Resources:
         S3Key: DeleteBadImages.zip
       FunctionName: ExampleCorpErrorEvent
       Timeout: 30
-      Handler: index.lambda_handler
+      Handler: index.handler
       Role: !GetAtt 
         - ExampleCorpLambdaRole
         - Arn
       Runtime: nodejs8.10
-
+      Environment:
+        Variables: 
+          database: !Ref DBName
+          endpoint: !Ref DBEndpoint
+          password: !Ref DBPassword
+          user: !Ref DBUser
+  
   LambdaInvokePermission:
     Type: 'AWS::Lambda::Permission'
     Properties:

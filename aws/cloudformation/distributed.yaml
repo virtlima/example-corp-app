@@ -61,7 +61,7 @@ Parameters:
      Type: String
 
     BucketName:
-        AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
+        AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$.
         ConstraintDescription: S3 Bucket name can include numbers, lowercase
           letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen
           (-).
@@ -151,9 +151,11 @@ Resources:
           EnvironmentName: !Ref 'AWS::StackName'
           BucketName: !Ref BucketName
           Email: !Ref Email
-          VPC: !GetAtt 
-            - VPC
-            - Outputs.VPC
+          DBName: !Ref DBName
+          DBUser: !Ref DBUser
+          DBPassword: !Ref DBPassword
+          DBEndpoint: !GetAtt Database.Outputs.PrimaryInstanceName
+          VPC: !GetAtt VPC.Outputs.VPC
 
 
 Outputs:
